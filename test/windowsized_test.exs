@@ -3,7 +3,7 @@ defmodule Window.SizedTest do
 
   test "i can create a window" do
     w = %Window.Sized{ size: 5 }
-    assert w.size = 5
+    assert w.size == 5
   end
 
   test "i can add units to window" do
