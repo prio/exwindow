@@ -6,24 +6,24 @@ defmodule Window.SizedTest do
     assert w.size == 5
   end
 
-  test "i can add units to window" do
+  test "i can add items to window" do
     w =  %Window.Sized{ size: 5 } |>
-         Window.Sized.add(1) |>
-         Window.Sized.add(2) |>
-         Window.Sized.add(3) |>
-         Window.Sized.add(4) |>
-         Window.Sized.add(5)
-    assert :queue.len(w.items) == 5
+         Window.add(1) |>
+         Window.add(2) |>
+         Window.add(3) |>
+         Window.add(4) |>
+         Window.add(5)
+    assert Enum.count(Window.items(w)) == 5
   end
 
   test "a window slides" do
     w = %Window.Sized{ size: 5 } |>
-         Window.Sized.add(1) |>
-         Window.Sized.add(2) |>
-         Window.Sized.add(3) |>
-         Window.Sized.add(4) |>
-         Window.Sized.add(5) |>
-         Window.Sized.add(6)
-    assert :queue.len(w.items) == 5
+         Window.add(1) |>
+         Window.add(2) |>
+         Window.add(3) |>
+         Window.add(4) |>
+         Window.add(5) |>
+         Window.add(6)
+    assert Enum.count(Window.items(w)) == 5
   end
 end
