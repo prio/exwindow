@@ -43,8 +43,8 @@ defmodule WindowTest do
         Window.add(6) |>
         Window.add(7)
     w1 = Window.from_id(w.id)
-    assert w1.size == 6
-    assert Enum.count(w1) == 6
+    assert w.size == w1.size
+    assert Enum.count(w) == Enum.count(w1)
   end
 
   test "a timed window slides" do
@@ -67,7 +67,7 @@ defmodule WindowTest do
         Window.add({5, 1}) |>
         Window.add({6, 1})
     w1 = Window.from_id(w.id)
-    assert w1.duration == 4
-    assert Enum.count(w1) == 4
+    assert w.duration == w1.duration
+    assert Enum.count(w1) ==Enum.count(w1)
   end
 end
