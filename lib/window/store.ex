@@ -4,6 +4,7 @@ defmodule Window.Store do
   # external API
   def start_link() do
     GenServer.start_link(__MODULE__, :ok, name: __MODULE__)
+    #Agent.start_link(fn -> Map.new end, name: __MODULE__)
   end
 
   def get(id) do
@@ -16,18 +17,18 @@ defmodule Window.Store do
 
   # GenServer implementation
   def init(:ok) do
-    {:ok, HashDict.new}
+    {:ok, Map.new}
   end
 
-  def handle_call({:get, id}, store) do
-    #{:ok, window} = Agent.get(store, &HashDict.get(&1, id))
-    window = HashDict.get(store, id)
+  def handle_call({:get, id}, _from, store) do
+    #{:ok, window} = Agent.get(store, &Map.get(&1, id))
+    window = Map.get(store, id)
     {:reply, window, store}
   end
 
   def handle_cast({:put, window}, store) do
-    #Agent.update(store, &HashDict.put(&1, window.id, window))
-    HashDict.put(store, window.id, window)
+    #Agent.update(store, &Map.put(&1, window.id, window))
+    store = Map.put(store, window.id, window)
     {:noreply, store}
   end
 end

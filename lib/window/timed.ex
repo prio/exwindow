@@ -1,5 +1,5 @@
 defmodule Window.Timed do
-  defstruct id: nil, duration: nil, items: :queue.new()
+  defstruct id: nil, duration: nil, items: :queue.new(), durable: false
 end
 
 defimpl Windowable, for: Window.Timed do

@@ -5,31 +5,22 @@ end
 
 defmodule Window do
   def sized(size) do
-    w = %Window.Sized{ id: UUID.uuid4(), size: size }
-    Window.Store.put(w)
-    w
-  end
-
-  def sized(size, [durable: false]) do
-    sized(size)
+    %Window.Sized{ id: UUID.uuid4(), size: size }
   end
 
   def sized(size, [durable: true]) do
-    sized(size)
-  end
-
-  def timed(duration) do
-    w = %Window.Timed{ id: UUID.uuid4(), duration: duration }
+    w = %Window.Sized{ id: UUID.uuid4(), size: size, durable: true }
     Window.Store.put(w)
     w
   end
 
-  def timed(duration, [durable: false]) do
-    timed(duration)
+  def timed(duration) do
+    %Window.Timed{ id: UUID.uuid4(), duration: duration }
   end
 
   def timed(duration, [durable: true]) do
-    w = timed(duration)
+    w = %Window.Timed{ id: UUID.uuid4(), duration: duration, durable: true }
+    Window.Store.put(w)
     w
   end
 
@@ -38,13 +29,18 @@ defmodule Window do
   end
 
   def add(window, item) do
-    Windowable.add(window, item)
+    w = Windowable.add(window, item)
+    if w.durable do
+      Window.Store.put(w)
+    end
+    w
   end
 
   def items(window) do
     Windowable.items(window)
   end
 end
+
 
 defimpl Enumerable, for: [Window.Sized, Window.Timed] do
   def count(window)	do
