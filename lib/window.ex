@@ -8,8 +8,28 @@ defmodule Window do
     %Window.Sized{ size: size }
   end
 
+  def sized(size, [durable: false]) do
+    %Window.Sized{ size: size }
+  end
+
+  def sized(size, [durable: true]) do
+    %Window.Sized{ size: size }
+  end
+
   def timed(duration) do
     %Window.Timed{ duration: duration }
+  end
+
+  def timed(duration, [durable: false]) do
+    %Window.Timed{ duration: duration }
+  end
+
+  def timed(duration, [durable: true]) do
+    %Window.Timed{ duration: duration }
+  end
+
+  def from_id(id) do
+    %Window.Timed{ duration: 0 }
   end
 
   def add(window, item) do

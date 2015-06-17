@@ -1,5 +1,5 @@
 defmodule Window.Sized do
-  defstruct size: nil, items: :queue.new()
+  defstruct id: nil, size: nil, items: :queue.new()
 end
 
 defimpl Windowable, for: Window.Sized do
