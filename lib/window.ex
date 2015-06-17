@@ -5,21 +5,21 @@ end
 
 defmodule Window do
   def sized(size) do
-    %Window.Sized{ id: UUID.uuid4(), size: size }
+    %Window.Sized{ size: size }
   end
 
-  def sized(size, [durable: true]) do
-    w = %Window.Sized{ id: UUID.uuid4(), size: size, durable: true }
+  def sized(id, size, [durable: true]) do
+    w = %Window.Sized{ id: id, size: size, durable: true }
     Window.Store.put(w)
     w
   end
 
   def timed(duration) do
-    %Window.Timed{ id: UUID.uuid4(), duration: duration }
+    %Window.Timed{ duration: duration }
   end
 
-  def timed(duration, [durable: true]) do
-    w = %Window.Timed{ id: UUID.uuid4(), duration: duration, durable: true }
+  def timed(id, duration, [durable: true]) do
+    w = %Window.Timed{ id: id, duration: duration, durable: true }
     Window.Store.put(w)
     w
   end

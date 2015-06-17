@@ -8,7 +8,7 @@ defmodule WindowTest do
   end
 
   test "i can create a durable sized window" do
-      w = Window.sized(7, durable: true)
+      w = Window.sized(:id, 7, durable: true)
       assert w.size == 7
   end
 
@@ -18,7 +18,7 @@ defmodule WindowTest do
   end
 
   test "i can create a durable timed window" do
-      w = Window.timed(31, durable: true)
+      w = Window.timed(:id, 31, durable: true)
       assert w.duration == 31
   end
 
@@ -34,7 +34,8 @@ defmodule WindowTest do
   end
 
   test "i can recreate a durable sized window" do
-    w = Window.sized(6, durable: true) |>
+    id = :id
+    w = Window.sized(id, 6, durable: true) |>
         Window.add(1) |>
         Window.add(2) |>
         Window.add(3) |>
@@ -42,7 +43,7 @@ defmodule WindowTest do
         Window.add(5) |>
         Window.add(6) |>
         Window.add(7)
-    w1 = Window.from_id(w.id)
+    w1 = Window.from_id(id)
     assert w.size == w1.size
     assert Enum.count(w) == Enum.count(w1)
   end
@@ -59,14 +60,15 @@ defmodule WindowTest do
   end
 
   test "i can recreate a durable timed window" do
-    w = Window.timed(4, durable: true) |>
+    id = :id
+    w = Window.timed(id, 4, durable: true) |>
         Window.add({0, 1}) |>
         Window.add({0, 1}) |>
         Window.add({3, 1}) |>
         Window.add({4, 1}) |>
         Window.add({5, 1}) |>
         Window.add({6, 1})
-    w1 = Window.from_id(w.id)
+    w1 = Window.from_id(id)
     assert w.duration == w1.duration
     assert Enum.count(w1) ==Enum.count(w1)
   end
